@@ -1,0 +1,211 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pickle Playground</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<style>
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .popup-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+</style>
+
+<body class="font-sans bg-gray-100">
+    <nav class="fixed w-full bg-red-500 p-4 text-white top-0">
+        <div class="flex items-center justify-between">
+            <div class=" text-2xl font-bold lg:ml-20 ">
+                PIC<span
+                    class="bg-gradient-to-r from-yellow-400 to-pink-300 via-pink-500 to-red-600 text-transparent bg-clip-text">KLE</span>
+            </div>
+
+            <!-- Hamburger Icon for Small Screens -->
+            <div class="block sm:hidden">
+                <button id="mobileMenuButton" class="text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Navigation Links for Medium and Large Screens -->
+            <div class="hidden sm:flex items-center gap-8">
+                <a href="#" id="myGamesLink" class="nav-link hover:underline">MY GAMES</a>
+                <a href="#" id="gamesAppsLink" class="nav-link hover:underline" onclick="openGamesAppsPopup()">GAMES &
+                    APPS</a>
+                <a href="#" id="communityLink" class="nav-link hover:underline">COMMUNITY</a>
+                <div class="cursor-pointer">
+                    <select id="country" name="country" class="border rounded-2xl text-black p-2 pr-4 outline-none">
+                        <option value="" disabled selected>Select a country..</option>
+                        <option value="usa">United States</option>
+                        <option value="canada">Canada</option>
+                        <option value="uk">United Kingdom</option>
+                        <option value="usa">Nigeria</option>
+                        <option value="canada">America</option>
+                        <option value="uk">Europe</option>
+                    </select>
+                </div>
+                <div class="ml-6 flex items-center justify-center">
+                    <div
+                        class="flex cursor-pointer gap-1 w-20 text-black text-center rounded-3xl border border-gray px-3 py-2">
+                        <img class="w-5" src="logo/icon 3.svg">
+                        <div>100</div>
+                    </div>
+                    <div class="ml-4 flex items-center justify-center ">
+                        <div
+                            class="flex items-center lg:mr-20 bg-white w-20 md:w-auto text-black text-center rounded-3xl border border-white px-4 p-1">
+                            <div>
+                                fiyinolaleke...
+                            </div>
+                            <div class="pl-2">
+                                <img class="w-8 h-8 object-cover border-2 rounded-3xl" src="logo/profile-pic.jpg">
+                            </div>
+                            <span class="font-bold pl-3 text-xl text-gray-500">&#62;</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden sm:hidden">
+            <a href="#" class="block py-2 px-4 text-white hover:bg-red-600">MY GAMES</a>
+            <a href="#" class="block py-2 px-4 text-white hover:bg-red-600" onclick="openGamesAppsPopup()">GAMES &
+                APPS</a>
+            <a href="#" class="block py-2 px-4 text-white hover:bg-red-600">COMMUNITY</a>
+        </div>
+    </nav>
+
+    <div class="mt-20 p-4 sm:pt-10">
+        <div class="border-2 rounded-3xl sm:mr-20 sm:ml-20 p-2 sm:p-4">
+            <div
+                class="flex flex-col sm:flex-row justify-center items-center sm:justify-between border-2 rounded-3xl m-2 sm:m-6 sm:p-5 ">
+                <div class="sm:w-80 text-center lg:ml-20 sm:text-left">
+                    <h6 class="text-red-500 mt-4 sm:mt-0 mb-3 font-bold text-lg sm:text-xl">
+                        OLALEKE FIYINFOLUWA!
+                    </h6>
+                    <h1 class="text-lg sm:text-2xl mb-3 font-bold">
+                        Welcome! What would you like to create today?
+                    </h1>
+                    <button class="mt-3 mb-3 border rounded-3xl bg-red-500 text-white p-2 sm:p-2 px-12 sm:px-20"onclick="redirectToCreate()" >
+                        CREATE
+                    </button>
+                </div>
+                <div class="text-center">
+                    <img src="logo/icon 2.svg" class="mt-4 sm:mt-0 w-full mr-12 ">
+                </div>
+            </div>
+
+
+            <div>
+                <h4>
+                    <a href="#" id="myGamesContentLink" class="font-bold pl-5 nav-link hover:underline">MY GAMES</a>
+                </h4>
+                <div
+                    class="flex flex-col items-center justify-center bg-yellow-200 border-2 rounded-3xl m-2 sm:m-6 p-3 sm:p-5 ">
+                    <div class="w-full sm:w-80 h-40">
+                        <div>
+                            <img src="logo/icon 1.png">
+                        </div>
+                    </div>
+                    <div class="text-red-500 cursor-pointer">
+                        + CREATE NEW GAMES
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mt-8 p-4 sm:pt-10">
+                <div class="flex flex-col justify-center border-2 rounded-3xl m-2 sm:m-6 p-3 sm:p-5 ">
+                    <div class="flex items-center justify-between lg:pl-6 lg:pr-6 pt-4">
+                        <h4 class="font-bold text-xl sm:text-2xl">PICKLE ADVENTURES</h4>
+                        <h6 class=" text-red-500 ml-2 sm:ml-4 text-sm">VIEW ALL <span
+                                class="font-bold pl-3 text-xl text-gray-500">&#62;</span>
+                        </h6>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-center justify-center sm:gap-20">
+                        <img src="logo/icon 4.png" class="mb-4 sm:mb-0">
+                        <img src="logo/icon 5.png" class="mb-4 sm:mb-0">
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-center justify-center sm:gap-20">
+                        <img src="logo/icon 5.png" class="mb-4 sm:mb-0">
+                        <img src="logo/icon 4.png" class="mb-4 sm:mb-0">
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-center justify-center sm:gap-20">
+                        <img src="logo/icon 4.png" class="mb-4 sm:mb-0">
+                        <img src="logo/icon 5.png" class="mb-4 sm:mb-0">
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="gamesAppsPopup" class="popup">
+                <div class="popup-content flex flex-row">
+                    <!-- Close button for the popup -->
+                    <span class="close-btn" onclick="closeGamesAppsPopup()">&times;</span>
+                    <img src="logo/mini frame.png" alt="Game 2" class="mb-4">
+                </div>
+            </div>
+
+            <script>
+                function openGamesAppsPopup() {
+                    var popup = document.getElementById("gamesAppsPopup");
+                    popup.style.display = "block";
+                }
+                function redirectToCreate(){
+                    window.location.href = 'create.html'
+                }
+
+                function closeGamesAppsPopup() {
+                    var popup = document.getElementById("gamesAppsPopup");
+                    popup.style.display = "none";
+                }
+
+                function closeGamesAppsPopup() {
+                    var popup = document.getElementById("gamesAppsPopup");
+                    popup.style.display = "none";
+
+                    window.location.href = 'interface.html';
+                }
+
+                function toggleMobileMenu() {
+                    var mobileMenu = document.getElementById("mobileMenu");
+                    mobileMenu.classList.toggle("hidden");
+                }
+
+                // Event listener for mobile menu button
+                document.getElementById("mobileMenuButton").addEventListener("click", toggleMobileMenu);
+            </script>
+</body>
+
+</html>

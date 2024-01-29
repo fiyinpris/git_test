@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        input:focus {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-r from-red-400 to-red-800 min-h-screen flex flex-col items-center justify-center">
+
+    <div class="flex flex-col items-center justify-center w-full max-w-md p-8 mt-5 rounded-md shadow-md bg-white">
+        <h1 class="text-3xl text-center font-bold mb-6">Verify Your Identity</h1>
+        <h6 class="text-center pb-4">Choose from the option below where you want to receive your code from:</h6>
+        <form id="authForm" class="space-y-4">
+            <div class="flex items-center justify-center">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="authMethod" value="gmail" class="mr-2" onclick="togglePasswordInput()">
+                    Gmail
+                </label>
+                <label class="inline-flex items-center ml-6">
+                    <input type="radio" name="authMethod" value="phone" class="mr-2" onclick="togglePasswordInput()">
+                    Phone Number
+                </label>
+            </div>
+            <div>
+                <input type="text" id="authInput" placeholder="Enter your mail or Phone Number"
+                    class="w-full p-3 border border-gray-300 rounded-md">
+                <input type="password" id="passwordInput" placeholder="Password"
+                    class="w-full p-3 mt-4 border border-gray-300 rounded-md hidden">
+            </div>
+
+            <div class="flex space-x-2 mt-4 pt-4">
+                <input type="text" id="code1" maxlength="1" oninput="moveToNextInput(this, 'code2')"
+                    onkeydown="moveToPreviousInputOnBackspace(event, 'code1', '')"
+                    class="w-1/6 p-3 border border-gray-300 rounded-md">
+                <input type="text" id="code2" maxlength="1" oninput="moveToNextInput(this, 'code3')"
+                    onkeydown="moveToPreviousInputOnBackspace(event, 'code1', 'code1')"
+                    class="w-1/6 p-3 border border-gray-300 rounded-md">
+                <input type="text" id="code3" maxlength="1" oninput="moveToNextInput(this, 'code4')"
+                    onkeydown="moveToPreviousInputOnBackspace(event, 'code2', 'code2')"
+                    class="w-1/6 p-3 border border-gray-300 rounded-md">
+                <input type="text" id="code4" maxlength="1" oninput="moveToNextInput(this, 'code5')"
+                    onkeydown="moveToPreviousInputOnBackspace(event, 'code3', 'code3')"
+                    class="w-1/6 p-3 border border-gray-300 rounded-md">
+                <input type="text" id="code5" maxlength="1" oninput="moveToNextInput(this, 'code6')"
+                    onkeydown="moveToPreviousInputOnBackspace(event, 'code4', 'code4')"
+                    class="w-1/6 p-3 border border-gray-300 rounded-md">
+                <input type="text" id="code6" maxlength="1" oninput="moveToNextInput(this, '')"
+                    onkeydown="moveToPreviousInputOnBackspace(event, 'code5', 'code5')"
+                    class="w-1/6 p-3 border border-gray-300 rounded-md">
+            </div>
+
+
+            <div class="flex items-center gap-3 mt-4">
+                <input type="checkbox" id="rememberDevice" class="w-4 h-4">
+                <h6>Remember this device for 30 days</h6>
+            </div>
+            <div class="flex items-center justify-center mt-4">
+                <button type="button" onclick="redirectTointerface()"
+                    class="w-full bg-blue-500 text-white rounded-full px-6 py-2">
+                    SUBMIT
+                </button>
+            </div>
+            <h6 class="cursor-pointer text-green-600 text-center" onclick="resendCode()">Resend code?</h6>
+        </form>
+    </div>
+
+    <div class="py-4 mt-auto">
+        <div
+            class="flex flex-col md:flex-row md:justify-center lg:justify-between items-center gap-2 md:gap-8 lg:gap-20 text-xs text-center">
+            <h6 class="m-2 md:mx-2 lg:mx-0">Pickle Playground © 2024</h6>
+            <h6 class="m-2 md:mx-2 lg:mx-0">User Agreement</h6>
+            <h6 class="m-2 md:mx-2 lg:mx-0">Privacy Policy</h6>
+            <h6 class="m-2 md:mx-2 lg:mx-0">Contact</h6>
+            <h6 class="m-2 md:mx-2 lg:mx-0">Cookie Policy</h6>
+            <h6 class="m-2 md:mx-2 lg:mx-0">Copyright Policy</h6>
+            <h6 class="m-2 md:mx-2 lg:mx-0">Send Feedback</h6>
+        </div>
+    </div>
+
+    <script>
+        function togglePasswordInput() {
+            var authMethod = document.querySelector('input[name="authMethod"]:checked').value;
+            var passwordInput = document.getElementById('passwordInput');
+
+            if (authMethod === 'gmail') {
+                passwordInput.classList.remove('hidden');
+            } else {
+                passwordInput.classList.add('hidden');
+            }
+        }
+
+
+        function resendCode() {
+            alert('Code resent!');
+        }
+
+        function submitCode() {
+            alert('Verification code submitted.');
+        }
+
+        function redirectTointerface() {
+            window.location.href = 'interface.html';
+        }
+
+
+        function sendCode() {
+            var authMethod = document.querySelector('input[name="authMethod"]:checked');
+            var authInput = document.getElementById('authInput').value;
+
+            if (authMethod && authInput) {
+                alert('Code sent to ' + authMethod.value + ': ' + authInput);
+            } else {
+                alert('Please choose authentication method and enter your Gmail or Phone Number.');
+            }
+        }
+
+        function moveToNextInput(currentInput, nextInputId) {
+            const maxLength = parseInt(currentInput.getAttribute('maxlength'));
+            const currentLength = currentInput.value.length;
+
+            if (currentLength === maxLength) {
+                const nextInput = document.getElementById(nextInputId);
+                if (nextInput) {
+                    nextInput.focus();
+                }
+            }
+        }
+
+        function moveToPreviousInputOnBackspace(event, currentInputId) {
+            const backspaceKeyCode = 8;
+            if (event.keyCode === backspaceKeyCode && event.target.value.length === 0) {
+
+                const currentInput = document.getElementById(currentInputId);
+                if (currentInput) {
+                    const previousInput = currentInput.previousElementSibling;
+                    if (previousInput) {
+                        previousInput.focus();
+                    }
+                }
+            }
+        }
+
+
+        function moveToNextInput(currentInput, nextInputId) {
+            const maxLength = parseInt(currentInput.getAttribute('maxlength'));
+            const currentLength = currentInput.value.length;
+
+            if (currentLength === maxLength) {
+                const nextInput = document.getElementById(nextInputId);
+                if (nextInput) {
+                    nextInput.focus();
+                }
+            }
+        }
+
+        function moveToPreviousInputOnBackspace(event, currentInputId, previousInputId) {
+            const backspaceKeyCode = 8;
+            if (event.keyCode === backspaceKeyCode && event.target.value.length === 0) {
+                const currentInput = document.getElementById(currentInputId);
+                if (currentInput) {
+                    const previousInput = document.getElementById(previousInputId);
+                    if (previousInput) {
+                        previousInput.focus();
+                    }
+                }
+            }
+        }
+
+        function submitCode() {
+            var authMethod = document.querySelector('input[name="authMethod"]:checked');
+            var authInput = document.getElementById('authInput').value;
+            var code1 = document.getElementById('code1').value;
+            var code2 = document.getElementById('code2').value;
+            var code3 = document.getElementById('code3').value;
+            var code4 = document.getElementById('code4').value;
+            var code5 = document.getElementById('code5').value;
+            var code6 = document.getElementById('code6').value;
+
+            if (authMethod && authInput && code1 && code2 && code3 && code4 && code5 && code6) {
+                var method = authMethod.value;
+                var authenticationCode = code1 + code2 + code3 + code4 + code5 + code6;
+
+                alert('Authentication code submitted.\nMethod: ' + method + '\nInput: ' + authInput + '\nCode: ' +
+                    authenticationCode);
+            } else {
+                alert('Please choose authentication method, enter your Gmail or Phone Number, and provide the complete code.');
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
